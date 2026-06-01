@@ -1,7 +1,7 @@
 Python code to study the dynamics of inertial particles in a double gyre flow with the inclusion of Coriolis force. Use the following steps:
 
 1. Firstly, run the code Initial Grid of particles.py
-2. Then run the code inertial_mapping.py to advect the fluid particles up to a finite time T. If you want to just advect the tracers, you can run the code tracer_mapping.py instead.  
+2. Then run the code inertial_mapping.py to advect the inertial particles up to a finite time T. If you want to just advect the tracers, you can run the code tracer_mapping.py instead.  
 3. Optional. Then run Scatterplots.m to see the particle aggreagtion plot.
 4. Then run the FTLE.py code to calculate the FTLE field. 
 5. Then, you can run the code FTLE maker.py to visualize the FTLE field. 
