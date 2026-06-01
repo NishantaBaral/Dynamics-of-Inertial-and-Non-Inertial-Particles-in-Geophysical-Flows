@@ -28,7 +28,6 @@ def update(r,t):
 
 #this file stores the final position of the tracers. For example, if we stared at t = 0 and are 
 #advecting the particles up to t = 7.5, this will store the position of tracers at t=7.5
-
 output = open('/Users/nishantabaral/Desktop/Geophysical Flows/Double Gyre Flow/Trace Analysis/tracerT=15.txt','ab')
 
 def read_mapping():
@@ -42,69 +41,24 @@ r = read_mapping()
 print(len(r))
 
     
-# for t in np.arange(0,T,dt).round(2):
-    
-#     k1 = dt*update(r,t)
-#     k2 = dt*update(r+0.5*k1,t+0.5*dt)
-#     k3 = dt*update(r+0.5*k2,t+0.5*dt)
-#     k4 = dt*update(r+k3,t+dt)
-#     k = r + (k1+2*k2+2*k3+k4)/6
+for t in np.arange(0,T,dt).round(2):
+    #classic 4th order Runge-Kutta method to update the position of the tracers
+    k1 = dt*update(r,t)
+    k2 = dt*update(r+0.5*k1,t+0.5*dt)
+    k3 = dt*update(r+0.5*k2,t+0.5*dt)
+    k4 = dt*update(r+k3,t+dt)
+    k = r + (k1+2*k2+2*k3+k4)/6
 
-#     x = k[:,0].copy()
-#     y = k[:,1].copy()
+    x = k[:,0].copy()
+    y = k[:,1].copy()
     
-#     x[x>2] = 2
-#     x[x<0] = 0
-#     y[y>1] = 1
-#     y[y<0] = 0
+    x[x>2] = 2
+    x[x<0] = 0
+    y[y>1] = 1
+    y[y<0] = 0
     
-#     r[:,0] = x
-#     r[:,1] = y
-
-#     # append data to the file	
-    
-#     print(t)
-    
+    r[:,0] = x
+    r[:,1] = y
           
-# np.savetxt(output,k)
-# output.close()
-save_times = [7.49, 14.99]   # save at these times
-# Track which save times have been completed
-saved = {st: False for st in save_times}
-base_path = '/Users/nishantabaral/Desktop/Geophysical Flows/Double Gyre Flow/Trace Analysis/'
-
-
-for t in np.arange(0, T, dt).round(2):
-    k1 = dt * update(r, t)
-    k2 = dt * update(r + 0.5*k1, t + 0.5*dt)
-    k3 = dt * update(r + 0.5*k2, t + 0.5*dt)
-    k4 = dt * update(r + k3, t + dt)
-    k = r + (k1 + 2*k2 + 2*k3 + k4) / 6
-
-    x = k[:, 0].copy()
-    y = k[:, 1].copy()
-    x[x > 2] = 2
-    x[x < 0] = 0
-    y[y > 1] = 1
-    y[y < 0] = 0
-    r[:, 0] = x
-    r[:, 1] = y
-
-    # Compute time after this step has been applied
-    t_after = round(t + dt, 2)
-
-    # Check if any save time has been reached
-    for st in save_times:
-        if not saved[st] and abs(t_after - st) < 1e-6:
-            fname = base_path + f'tracerT={st}.npy'
-            np.save(fname, r)
-            print(f"Saved t={st} to {fname}")
-            saved[st] = True
-
-    if t % 1 < dt:   # progress every ~1 time unit
-        print(f"t = {t_after}")
-    
-    
-    
-        
-        
+np.savetxt(output,k)
+output.close()
