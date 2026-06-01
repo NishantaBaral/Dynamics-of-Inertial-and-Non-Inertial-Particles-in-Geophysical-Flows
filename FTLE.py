@@ -5,8 +5,8 @@ import numpy.linalg as LA
 import time as time
 
 # constants
-L = 5000
-H = 2500
+L = 500
+H = 250
 # horizontal grid difference
 delta_1 = 2/(L-1)
 # verticle grid difference
